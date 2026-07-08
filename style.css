@@ -26,6 +26,12 @@ main{padding:2rem 0}
 .meta{color:var(--muted);margin:.2rem 0 1rem}
 .article ul{background:#0e1320;padding:1rem 1rem 1rem 2.2rem;border-radius:10px}
 .article ul.check li{margin:.3rem 0}
+.article ol.steps{background:#0e1320;padding:1rem 1rem 1rem 2.6rem;border-radius:10px}
+.article ol.steps li{margin:.45rem 0}
+.article ul.errors li{color:#ff9b9b}
+.article details.faq{background:#0e1320;border-radius:8px;padding:.6rem .9rem;margin:.5rem 0}
+.article details.faq summary{cursor:pointer;font-weight:600;color:#fff}
+.article details.faq p{margin:.4rem 0 0;color:var(--muted)}
 .cta{border-left:4px solid var(--accent);padding:.7rem 1rem;background:var(--card);margin:1.4rem 0;border-radius:0 10px 10px 0}
 .source{border-left:4px solid #2a3340;padding:.6rem 1rem;color:var(--muted);font-style:italic;background:#0e1320;border-radius:0 10px 10px 0}
 .source footer{font-style:normal;margin-top:.3rem}
