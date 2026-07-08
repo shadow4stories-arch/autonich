@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shadow4stories-arch.github.io/autonich/sitemap.xml
