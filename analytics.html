@@ -1,0 +1,35 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Analytics - AutoNiche Network</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="style.css">
+<style>
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.5rem 0}
+.dash-card{background:var(--card);border:1px solid #1f2733;border-radius:12px;padding:1.2rem;text-align:center}
+.dash-card h3{margin:0;font-size:1rem;color:var(--muted)}
+.dash-card .num{font-size:2.4rem;font-weight:700;color:var(--accent);margin:.3rem 0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+th{text-align:left;padding:.5rem;border-bottom:1px solid #1f2733;color:var(--muted)}
+td{padding:.5rem;border-bottom:1px solid #141925}
+.bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);margin-right:.5rem;vertical-align:middle}
+.status{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.4rem}
+.status.on{background:var(--accent)}
+.status.off{background:#ff6b6b}
+#refreshing{color:var(--muted);font-style:italic}
+</style>
+
+</head><body>
+<header class="site-header"><div class="wrap"><a href="index.html" class="back">&larr; AutoNiche Network</a><h1>Analytics</h1></div></header>
+<main class="wrap"><div id="analytics-root"></div></main>
+<script>
+var STATE = {"total_pageviews": 0, "unique_visitors": 0, "last_24h_hits": 0, "top_pages": {}, "top_referrers": {}, "total_pages_tracked": 0};
+function render(){var s=STATE||{};var h='<div id=status>'+(s.server?'<span class="status on"></span>Conectado':'<span class="status off"></span>Sin servidor')+'</div><div class=dash-grid><div class=dash-card><h3>Visitas totales</h3><div class=num>'+(s.total_pageviews||0)+'</div></div><div class=dash-card><h3>Visitantes unicos</h3><div class=num>'+(s.unique_visitors||0)+'</div></div><div class=dash-card><h3>Ultimas 24h</h3><div class=num>'+(s.last_24h_hits||0)+'</div></div><div class=dash-card><h3>Paginas</h3><div class=num>'+(s.total_pages_tracked||0)+'</div></div></div>';h+='<h2>Paginas mas visitadas</h2><table><thead><tr><th>Pagina</th><th>Visitas</th><th></th></tr></thead><tbody>';
+var max=1;var pages=Object.entries(s.top_pages||{});pages.forEach(function(e){if(e[1]>max)max=e[1]});
+pages.forEach(function(e){var w=Math.round(e[1]/max*100);h+='<tr><td>'+e[0]+'</td><td>'+e[1]+'</td><td><div class=bar style="width:'+w+'%"></div></td></tr>'});
+h+='</tbody></table><h2>Referentes</h2><table><thead><tr><th>Referente</th><th>Visitas</th></tr></thead><tbody>';
+var refs=Object.entries(s.top_referrers||{});if(refs.length){refs.forEach(function(e){h+='<tr><td>'+e[0]+'</td><td>'+e[1]+'</td></tr>'})}else{h+='<tr><td colspan=2 style="color:var(--muted)">Sin referentes aun</td></tr>'}
+h+='</tbody></table>';document.getElementById('analytics-root').innerHTML=h}
+render();
+setTimeout(function(){fetch('/data').then(function(r){if(!r.ok)throw Error();return r.json()}).then(function(d){STATE=d;STATE.server=true;render()}).catch(function(){STATE.server=false;render()})},500);
+</script>
+</body></html>
